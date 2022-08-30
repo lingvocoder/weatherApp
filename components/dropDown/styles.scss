@@ -1,0 +1,70 @@
+@import "../../_variables/variables";
+@import "../../_mixins/mixins";
+
+.menu-wrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  //right: -100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #5041B2;
+  border-radius: 24px;
+  z-index: getZIndex('default');
+  transition: right .25s 0s cubic-bezier($animation-timing);
+
+  & .menu-mobile {
+    &__inner {
+      padding: 2rem 3rem 5rem;
+
+      & .header__logo-mobile {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+      }
+
+      & .header__icon {
+        &.mobile-close {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 40px;
+          height: 50px;
+          padding: 5px;
+
+          & .fa-times {
+            font-size: setFontSizeRem($rf-size, 20);
+            margin-top: 10px;
+            width: 20px;
+            color: #ffffff;
+          }
+        }
+      }
+    }
+
+    &__list {
+      display: block;
+      top: 0;
+      padding: 0;
+      border: 0;
+      text-align: left;
+      vertical-align: baseline;
+    }
+
+    &__item {
+      font-size: setFontSizeRem($rf-size, 16);
+      line-height: 1.5;
+      border-bottom: 1px solid rgba(255, 255, 255, .2);
+      font-weight: 500;
+      padding: 0;
+    }
+
+    &__link {
+      display: block;
+      padding: 15px 0;
+      color: #ffffff;
+      font-size: setFontSizeRem($rf-size, 17);
+    }
+  }
+}
