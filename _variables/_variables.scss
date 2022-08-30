@@ -1,18 +1,5 @@
 $rf-size: 16px;
-/*Colors*/
 $main-color: rgb(0,0,0);
 $main-bg-color: rgb(2, 178, 238);
 $dark-blue: rgba(6, 8, 178, 1);
-/*Animation*/
 $animation-timing: 0.45, 0, 0.55, 1;
-
-
-
-
-
-
-$breakpoints: (
-        'medium': (min-width: 800px),
-        'large': (min-width: 1000px),
-        'huge': (min-width: 1200px),
-);

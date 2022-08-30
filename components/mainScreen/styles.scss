@@ -1,0 +1,122 @@
+@import "../../_mixins/mixins";
+@import "../../_variables/variables";
+
+
+.weather {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgb(18, 207, 243) 0%, rgb(90, 178, 247) 77%);
+  }
+
+  &__inner {
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__container {
+    position: relative;
+    width: 320px;
+    height: 667px;
+    padding: 1.5rem 2rem 2rem;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(180deg, rgb(18, 207, 243) 0%, rgb(90, 178, 247) 85%);
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.09),
+    0 4px 2px rgba(0, 0, 0, 0.09),
+    0 8px 4px rgba(0, 0, 0, 0.09),
+    0 16px 8px rgba(0, 0, 0, 0.09),
+    0 32px 16px rgba(0, 0, 0, 0.09);;
+  }
+
+  &-content {
+    position: relative;
+    width: 100%;
+    height: auto;
+
+    &__inner {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+
+    &__elem {
+      display: inline-block;
+      width: 100%;
+      padding: .5rem 1.25rem;
+      text-align: center;
+
+      &#description,
+      &#degree {
+        text-shadow: 1px 1px 1px rgba(45, 45, 45, 0.3);
+      }
+
+      &#degree {
+        font: {
+          size: setFontSizeRem($rf-size, 24);
+        }
+      }
+
+      &_supp {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        white-space: nowrap;
+      }
+    }
+
+    &__icon {
+      line-height: 1;
+      font-weight: 400;
+      margin-right: 0.5rem;
+
+      &_main {
+        font: {
+          size: 3.625rem;
+        };
+        text-shadow: 1px 1px 1px rgba(45, 45, 45, 0.3);
+        margin-right: 0;
+      }
+
+      &_supp {
+        width: 1.125rem;
+        font: {
+          size: 1.125rem;
+        };
+      }
+    }
+
+    &__row {
+      position: relative;
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+      margin-bottom: 1rem;
+      padding-top: 1rem;
+
+      &:nth-last-of-type(1) {
+        border-top: 1px solid rgba(75, 85, 99, 0.3);
+      }
+    }
+  }
+
+  &__heading {
+    line-height: 1.5;
+  }
+
+  &__header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+}
