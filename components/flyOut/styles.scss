@@ -167,6 +167,7 @@ $item-border-color:rgba(70, 80, 93, 0.3);
 
     &_drag {
       cursor: move;
+      z-index: getZIndex('flyout');
     }
 
     &_open,
@@ -174,6 +175,10 @@ $item-border-color:rgba(70, 80, 93, 0.3);
       cursor: pointer;
       z-index: getZIndex('flyout');
     }
+  }
+
+  &__fetch {
+    line-height: 20px;
   }
 
 }

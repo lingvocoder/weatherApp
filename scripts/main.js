@@ -3,9 +3,9 @@ class WeatherApp {
     static dragged = null;
 
     constructor() {
-        this.initEventListeners();
         this.APPID = "1be4f38ab943b366bfbf42919abf5ba5";
         this.URL = "http://api.openweathermap.org/data/2.5/weather?";
+        this.initEventListeners();
     }
 
     get template() {
@@ -86,19 +86,16 @@ class WeatherApp {
         document.addEventListener("DOMContentLoaded", this.onHandleDragEvent);
         document.addEventListener("click", this.onHandleDragEvent);
         document.addEventListener("DOMContentLoaded", this.getNavigationData);
-        document.addEventListener("click", this.handleMenuItemClick);
+        document.addEventListener("DOMContentLoaded", this.handleMenuItemClick);
     }
 
     handleDragStart = (ev) => {
         const {target} = ev;
         WeatherApp.dragged = target;
-
         ev.dataTransfer.effectAllowed = 'move';
         ev.dataTransfer.setData('text/html', target.innerHTML);
-        // ev.dataTransfer.setData(internalDNDType, target.dataset.location);
-        // ev.dataTransfer.setData(internalDNDType, target.dataset.id);
-        target.style.opacity = '0.6';
-        target.style.borderStyle = 'dashed';
+        target.children[0].style.opacity = '0.6';
+        target.children[0].style.borderStyle = 'dashed';
     }
 
     handleDragEnd = (ev) => {
@@ -108,8 +105,8 @@ class WeatherApp {
             item.classList.remove('menu__item_over');
             [...item.children].forEach(child => child.style.borderStyle = 'none');
         });
-        target.style.opacity = '1';
-        target.style.borderStyle = 'solid';
+        target.children[0].style.opacity = '1';
+        target.children[0].style.borderStyle = 'solid';
     }
 
     handleDragOver = (ev) => {
@@ -130,17 +127,17 @@ class WeatherApp {
 
     handleDrop = (ev) => {
         const {target} = ev;
-        const listItemIcon = target.closest('.menu__icon_drag');
+        const listItem = target.closest("[draggable='true']");
         ev.stopPropagation();
-        if (WeatherApp.dragged !== listItemIcon.parentNode) {
-            WeatherApp.dragged.innerHTML = listItemIcon.parentNode.innerHTML;
-            listItemIcon.parentNode.innerHTML = ev.dataTransfer.getData('text/html');
+        if (WeatherApp.dragged !== listItem) {
+            WeatherApp.dragged.innerHTML = listItem.innerHTML;
+            listItem.innerHTML = ev.dataTransfer.getData('text/html');
         }
         return false;
     }
 
     onHandleDragEvent = () => {
-        const listItems = [...document.querySelectorAll('.menu__item')];
+        const listItems = [...document.querySelectorAll("[draggable='true']")];
         listItems.forEach(item => {
             item.addEventListener('dragstart', this.handleDragStart);
             item.addEventListener('dragover', this.handleDragOver);
@@ -151,7 +148,7 @@ class WeatherApp {
         })
     }
 
-    animateElement = (element, animationName, cb) => {
+    animateFlyout = (element, animationName, cb) => {
         const node = document.querySelector(element);
         node.classList.add(`${element.substring(1)}_animated`, `${element.substring(1)}_${animationName}`);
         switch (animationName) {
@@ -177,7 +174,7 @@ class WeatherApp {
         const openBtn = target.closest(".menu__icon_open");
         if (!openBtn) return;
         const menu = '.menu';
-        this.animateElement(menu, 'active');
+        this.animateFlyout(menu, 'active');
     };
 
     onCloseMenuClick = (ev) => {
@@ -185,38 +182,43 @@ class WeatherApp {
         const openBtn = target.closest(".menu__icon_close");
         if (!openBtn) return;
         const menu = `.menu`;
-        this.animateElement(menu, 'inactive');
+        this.animateFlyout(menu, 'inactive');
     };
 
     getListItem = (item) => {
         const {city: city, country: country, id} = item;
         const resString = `${city}, ${country}`;
         return `
-        <li draggable="true" class="menu__item" data-location='${JSON.stringify({city, country})}' data-id="${id}">
-            <svg class="menu__icon menu__icon_drag" xmlns="http://www.w3.org/2000/svg" fill="none"
-                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"/>
-            </svg>
-           ${resString}
-            <svg class="menu__icon menu__icon_delete" xmlns="http://www.w3.org/2000/svg" fill="none"
-                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                 <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
-            </svg>
+        <li draggable="true">
+            <div class="menu__item" data-location='${JSON.stringify({city, country})}' data-id="${id}">
+                <svg class="menu__icon menu__icon_drag" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"/>
+                </svg>
+                <span class="menu__fetch">${resString}</span>
+                <svg class="menu__icon menu__icon_delete" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
+                </svg>
+            </div>
         </li>
         `
     }
 
     getSearchValue = () => {
         const node = document.querySelector('.menu-searchbar__input');
-        const inputValue = node.value;
         const regExp = new RegExp(/\s+|,\s?/g);
-        const city = inputValue.split(regExp)[0].substring(0, 1).toUpperCase().concat(inputValue.split(regExp)[0].substring(1));
-        const country = inputValue.split(regExp)[1].toUpperCase() || 'RU';
+        const inputValue = node.value;
+        if (node.value !== undefined) {
+            const city = inputValue.split(regExp)[0].substring(0, 1).toUpperCase().concat(inputValue.split(regExp)[0].substring(1));
+            const country = inputValue.split(regExp)[1].toUpperCase() || '';
+            return {
+                city: city,
+                country: country
+            };
+        }
         console.log(inputValue.split(regExp));
-        return {
-            city: city,
-            country: country
-        };
+        
     }
 
     updateList = (menu) => {
@@ -233,17 +235,19 @@ class WeatherApp {
         const list = document.querySelector('.menu__list');
         let that = this;
         list.addEventListener('click', function (ev) {
+            ev.stopPropagation();
             const {target} = ev;
             const deleteButton = target.closest('.menu__icon_delete');
-            const currItem = deleteButton.parentNode;
+            if (!deleteButton) return;
+            const currItem = target.closest("[draggable='true']");
             const {id: currItemID} = currItem.dataset;
             let cachedList = that.getCachedList();
             let listCopy = [...cachedList];
-            if (!deleteButton) return;
             const filteredList = listCopy.filter(item => item.id !== parseInt(currItemID));
             list.removeChild(currItem);
             that.updateList(filteredList);
-        })
+
+        },true)
     }
 
     fetchMenu = () => {
@@ -283,48 +287,49 @@ class WeatherApp {
     }
 
     handleMenuItemClick = () => {
-        const menuItems = [...document.querySelectorAll('.menu__item')];
+        const list = document.querySelector(".menu__list");
         let that = this;
 
-        menuItems.forEach(item => {
-            item.addEventListener('click', (ev) => {
-                const {location} = ev.target.dataset;
-                const {city, country} = JSON.parse(location);
-                console.log(`${city}/${country}`);
-                console.log(location);
-                const menu = `.menu`;
+        list.addEventListener('click', (ev) => {
+            ev.stopPropagation();
+            const target = ev.target;
+            const menuItem = target.closest('.menu__fetch');
+            const {location} = menuItem.parentNode.dataset;
+            const {city, country} = JSON.parse(location);
+            const menu = `.menu`;
 
-                const getWeatherData = () => {
+            const getWeatherData = () => {
 
-                    const options = {
-                        city: [city, country.toLowerCase()],
-                        units: "metric",
-                        lang: "en",
-                        APPID: that.APPID,
-                    };
-                    const url = that.URL.concat(that.createQuery(options));
+                const options = {
+                    city: [city, country.toLowerCase()],
+                    units: "metric",
+                    lang: "en",
+                    APPID: that.APPID,
+                };
+                
+                const url = that.URL.concat(that.createQuery(options));
 
-                    const params = {
-                        main: 'main',
-                        weather: 'weather',
-                        wind: 'wind',
-                        visibility: "visibility",
-                        sys: "sys",
-                    }
-
-                    fetch(url)
-                        .then(response => response.json())
-                        .then((data) => {
-                            that.displayData(data, params);
-                            that.animateElement(menu, 'inactive');
-                        })
-                        .catch(function (e) {
-                            console.warn(e.message);
-                        });
+                const params = {
+                    main: 'main',
+                    weather: 'weather',
+                    wind: 'wind',
+                    visibility: "visibility",
+                    sys: "sys",
                 }
-                getWeatherData();
-            })
-        })
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then((data) => {
+                        that.displayData(data, params);
+                        that.animateFlyout(menu, 'inactive');
+                    })
+                    .catch(function (e) {
+                        console.warn(e.message);
+                    });
+            }
+            getWeatherData();
+        },true)
+        
     }
 
     handleSearchButtonClick = () => {
@@ -358,7 +363,7 @@ class WeatherApp {
                     .then(response => response.json())
                     .then((data) => {
                         that.displayData(data, params);
-                        this.animateElement(menu, 'inactive');
+                        that.animateFlyout(menu, 'inactive');
                     })
                     .catch(function (e) {
                         console.warn(e.message);
@@ -486,7 +491,7 @@ class WeatherApp {
         }
     }
 
-    setWindSpeedDirection = (speed, degree) => {
+    setWindSpeedStrength = (speed, degree) => {
         const node = document.querySelector("#wind");
         const na = document.createElement("i");
         const windIcon = document.createElement("i");
@@ -678,7 +683,7 @@ class WeatherApp {
         this.setIconCode(icon, id);
         this.setTemperature(temp);
         this.setDescription(description, feels_like);
-        this.setWindSpeedDirection(speed, deg);
+        this.setWindSpeedStrength(speed, deg);
         this.setHumidity(humidity);
         this.setPressure(pressure);
         this.setVisibility(visibility);

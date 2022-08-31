@@ -221,10 +221,13 @@ h4 {
       cursor: pointer;
       z-index: 800; }
     .menu__icon_drag {
-      cursor: move; }
+      cursor: move;
+      z-index: 800; }
     .menu__icon_open, .menu__icon_close {
       cursor: pointer;
       z-index: 800; }
+  .menu__fetch {
+    line-height: 20px; }
 
 @keyframes slideInRight {
   from {
