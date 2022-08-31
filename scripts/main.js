@@ -28,11 +28,11 @@ class WeatherApp {
                             <main class="weather-content">
                                 <div class="weather-content__inner">
                                     <div class="weather-content__row">
-                                        <span id="mainIcon" class="weather-content__elem">
-                                            <i class="wi weather-content__icon_main"></i>
-                                        </span>
-                                        <span id="description" class="weather-content__elem"></span>
-                                        <span id="degree" class="weather-content__elem"></span>
+                                        <div class="weather-content__elem">
+                                            <i id="mainIcon" class="wi weather-content__icon_main"></i>
+                                        </div>
+                                        <div id="description" class="weather-content__elem"></div>
+                                        <div id="degree" class="weather-content__elem"></div>
                                     </div>
                                     <div class="weather-content__row">
                                         <span id="wind" class="weather-content__elem weather-content__elem_supp"></span>
