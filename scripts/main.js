@@ -218,7 +218,7 @@ class WeatherApp {
             };
         }
         console.log(inputValue.split(regExp));
-        
+
     }
 
     updateList = (menu) => {
@@ -247,7 +247,7 @@ class WeatherApp {
             list.removeChild(currItem.parentNode);
             that.updateList(filteredList);
 
-        },true)
+        }, true)
     }
 
     fetchMenu = () => {
@@ -306,7 +306,7 @@ class WeatherApp {
                     lang: "en",
                     APPID: that.APPID,
                 };
-                
+
                 const url = that.URL.concat(that.createQuery(options));
 
                 const params = {
@@ -328,8 +328,8 @@ class WeatherApp {
                     });
             }
             getWeatherData();
-        },true)
-        
+        }, true)
+
     }
 
     handleSearchButtonClick = () => {
@@ -378,14 +378,14 @@ class WeatherApp {
         let obj = paramObj;
         let queryArr = [];
 
-        for (let key in obj) {
+        for (let key of Object.keys(obj)) {
             if (obj.hasOwnProperty(key)) {
                 if (key === "city") {
                     let oldKey = key;
                     key = "q";
-                    queryArr.push(key + "=" + obj[oldKey]);
+                    queryArr.push(`${key}=${obj[oldKey]}`);
                 } else {
-                    queryArr.push(key + "=" + obj[key]);
+                    queryArr.push(`${key}=${obj[key]}`);
                 }
             }
         }
