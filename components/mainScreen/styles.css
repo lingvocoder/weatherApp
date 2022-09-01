@@ -20,6 +20,12 @@
     overflow: hidden;
     background: linear-gradient(180deg, #12cff3 0%, #5ab2f7 85%);
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.09), 0 4px 2px rgba(0, 0, 0, 0.09), 0 8px 4px rgba(0, 0, 0, 0.09), 0 16px 8px rgba(0, 0, 0, 0.09), 0 32px 16px rgba(0, 0, 0, 0.09); }
+    .weather__container_day {
+      background: linear-gradient(180deg, #12cff3 0%, #5ab2f7 85%); }
+    .weather__container_night {
+      background: linear-gradient(45deg, #6b4984 0%, #483475 15%, #2b2f77 35%, #141852 75%, #070b34 100%); }
+      .weather__container_night > .weather-content, .weather__container_night > .weather__header {
+        color: #fff; }
   .weather-content {
     position: relative;
     width: 100%;

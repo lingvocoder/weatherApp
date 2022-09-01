@@ -13,7 +13,7 @@ class WeatherApp {
             <div class="weather">
                 <div class="weather__wrapper">
                     <div class="weather__inner">
-                        <div class="weather__container">
+                        <div class="weather__container weather__container_day">
                             <div class="weather__header">
                                 <svg class="menu__icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -233,19 +233,18 @@ class WeatherApp {
 
     deleteMenuItem = () => {
         const list = document.querySelector('.menu__list');
-        let that = this;
-        list.addEventListener('click', function (ev) {
+        list.addEventListener('click', (ev) => {
             ev.stopPropagation();
             const {target} = ev;
             const deleteButton = target.closest('.menu__icon_delete');
             if (!deleteButton) return;
             const currItem = target.closest(".menu__item");
             const {id: currItemID} = currItem.dataset;
-            let cachedList = that.getCachedList();
+            let cachedList = this.getCachedList();
             let listCopy = [...cachedList];
             const filteredList = listCopy.filter(item => item.id !== parseInt(currItemID));
             list.removeChild(currItem.parentNode);
-            that.updateList(filteredList);
+            this.updateList(filteredList);
 
         }, true)
     }
@@ -254,11 +253,10 @@ class WeatherApp {
         const list = document.querySelector('.menu__list');
         const node = document.querySelector('.menu-searchbar__input');
         let cachedList = this.getCachedList();
-        let that = this;
 
-        function getList() {
+        const getList = () => {
             return cachedList.map(item => {
-                return item ? that.getListItem(item) : '';
+                return item ? this.getListItem(item) : '';
             }).join('');
         }
 
@@ -288,7 +286,6 @@ class WeatherApp {
 
     handleMenuItemClick = () => {
         const list = document.querySelector(".menu__list");
-        let that = this;
 
         list.addEventListener('click', (ev) => {
             ev.stopPropagation();
@@ -304,10 +301,10 @@ class WeatherApp {
                     city: [city, country.toLowerCase()],
                     units: "metric",
                     lang: "en",
-                    APPID: that.APPID,
+                    APPID: this.APPID,
                 };
 
-                const url = that.URL.concat(that.createQuery(options));
+                const url = this.URL.concat(this.createQuery(options));
 
                 const params = {
                     main: 'main',
@@ -320,8 +317,8 @@ class WeatherApp {
                 fetch(url)
                     .then(response => response.json())
                     .then((data) => {
-                        that.displayData(data, params);
-                        that.animateFlyout(menu, 'inactive');
+                        this.displayData(data, params);
+                        this.animateFlyout(menu, 'inactive');
                     })
                     .catch(function (e) {
                         console.warn(e.message);
@@ -339,7 +336,7 @@ class WeatherApp {
             const {city, country} = that.getSearchValue();
             const menu = `.menu`;
             if (!searchButton) return;
-            that.createMenuItem();
+            this.createMenuItem();
 
             const getWeatherData = () => {
 
@@ -347,9 +344,9 @@ class WeatherApp {
                     city: [city, country.toLowerCase()],
                     units: "metric",
                     lang: "en",
-                    APPID: that.APPID,
+                    APPID: this.APPID,
                 };
-                const url = that.URL.concat(that.createQuery(options));
+                const url = this.URL.concat(this.createQuery(options));
 
                 const params = {
                     main: 'main',
@@ -362,8 +359,8 @@ class WeatherApp {
                 fetch(url)
                     .then(response => response.json())
                     .then((data) => {
-                        that.displayData(data, params);
-                        that.animateFlyout(menu, 'inactive');
+                        this.displayData(data, params);
+                        this.animateFlyout(menu, 'inactive');
                     })
                     .catch(function (e) {
                         console.warn(e.message);
@@ -468,13 +465,20 @@ class WeatherApp {
 
     setIconCode = (icon, id) => {
         const node = document.querySelector("#mainIcon");
+        const container = document.querySelector(".weather__container");
+        const header = document.querySelector(".weather__header");
+        const content = document.querySelector(".weather__content");
         node.className = 'weather-content__icon_main';
         if (icon === undefined) {
             node.classList.add("wi-na");
         } else if (icon.indexOf("n") !== -1) {
             node.classList.add("wi", "wi-owm-night-" + id);
-        } else if (icon.indexOf("d") !== -1) {
+            container.classList.remove("weather__container_day");
+            container.classList.add("weather__container_night");
+        } else {
             node.classList.add("wi", "wi-owm-day-" + id);
+            container.classList.add("weather__container_day");
+            container.classList.remove("weather__container_night");
         }
     }
 
