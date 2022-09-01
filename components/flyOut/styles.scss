@@ -79,7 +79,6 @@ $item-border-color:rgba(70, 80, 93, 0.3);
     border-radius: 0.375rem;
     border: 1px solid $item-border-color;
     background-color: inherit;
-    cursor: pointer;
     line-height: 1.5;
     transition: background 0.15s 0s cubic-bezier($animation-timing);
 
@@ -177,8 +176,9 @@ $item-border-color:rgba(70, 80, 93, 0.3);
     }
   }
 
-  &__fetch {
+  &__text {
     line-height: 20px;
+    cursor: pointer;
   }
 
 }
