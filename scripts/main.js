@@ -466,8 +466,7 @@ class WeatherApp {
     setIconCode = (icon, id) => {
         const node = document.querySelector("#mainIcon");
         const container = document.querySelector(".weather__container");
-        const header = document.querySelector(".weather__header");
-        const content = document.querySelector(".weather__content");
+     
         node.className = 'weather-content__icon_main';
         if (icon === undefined) {
             node.classList.add("wi-na");
