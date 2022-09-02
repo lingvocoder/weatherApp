@@ -1,4 +1,24 @@
-
+/*!
+ *  Weather Icons 2.0.10
+ *  Updated November 1, 2020
+ *  Weather themed icons for Bootstrap
+ *  Author - Erik Flowers - erik@helloerik.com
+ *  Email: erik@helloerik.com
+ *  Twitter: http://twitter.com/Erik_UX
+ *  ------------------------------------------------------------------------------
+ *  Maintained at http://erikflowers.github.io/weather-icons
+ *
+ *  License
+ *  ------------------------------------------------------------------------------
+ *  - Font licensed under SIL OFL 1.1 -
+ *    http://scripts.sil.org/OFL
+ *  - CSS, SCSS and LESS are licensed under MIT License -
+ *    http://opensource.org/licenses/mit-license.html
+ *  - Documentation licensed under CC BY 3.0 -
+ *    http://creativecommons.org/licenses/by/3.0/
+ *  - Inspired by and works great as a companion with Font Awesome
+ *    "Font Awesome by Dave Gandy - http://fontawesome.io"
+ */
 @font-face {
   font-family: 'weathericons';
   src: url('./font/weathericons-regular-webfont.eot');
@@ -1376,13 +1396,13 @@
   content: "\f00d";
 }
 .wi-owm-801:before {
-  content: "\f011";
+  content: "\f041";
 }
 .wi-owm-802:before {
-  content: "\f011";
+  content: "\f041";
 }
 .wi-owm-803:before {
-  content: "\f012";
+  content: "\f013";
 }
 .wi-owm-804:before {
   content: "\f013";
@@ -1556,16 +1576,16 @@
   content: "\f00d";
 }
 .wi-owm-day-801:before {
-  content: "\f000";
+  content: "\f002";
 }
 .wi-owm-day-802:before {
-  content: "\f000";
+  content: "\f002";
 }
 .wi-owm-day-803:before {
-  content: "\f000";
+  content: "\f013";
 }
 .wi-owm-day-804:before {
-  content: "\f00c";
+  content: "\f013";
 }
 .wi-owm-day-900:before {
   content: "\f056";
@@ -1730,16 +1750,16 @@
   content: "\f02e";
 }
 .wi-owm-night-801:before {
-  content: "\f022";
+  content: "\f081";
 }
 .wi-owm-night-802:before {
-  content: "\f022";
+  content: "\f086";
 }
 .wi-owm-night-803:before {
-  content: "\f022";
+  content: "\f013";
 }
 .wi-owm-night-804:before {
-  content: "\f086";
+  content: "\f013";
 }
 .wi-owm-night-900:before {
   content: "\f056";

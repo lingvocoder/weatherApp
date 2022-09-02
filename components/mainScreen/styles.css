@@ -23,7 +23,7 @@
     .weather__container_day {
       background: linear-gradient(180deg, #12cff3 0%, #5ab2f7 85%); }
     .weather__container_night {
-      background: linear-gradient(45deg, #6b4984 0%, #483475 15%, #2b2f77 35%, #141852 75%, #070b34 100%); }
+      background: linear-gradient(45deg, #6b4984 0%, #483475 20%, #2b2f77 40%, #141852 80%, #070b34 100%); }
       .weather__container_night > .weather-content, .weather__container_night > .weather__header {
         color: #fff; }
   .weather-content {

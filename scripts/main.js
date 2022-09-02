@@ -471,11 +471,11 @@ class WeatherApp {
         if (icon === undefined) {
             node.classList.add("wi-na");
         } else if (icon.indexOf("n") !== -1) {
-            node.classList.add("wi", "wi-owm-night-" + id);
+            node.classList.add("wi", `wi-owm-night-${id}`);
             container.classList.remove("weather__container_day");
             container.classList.add("weather__container_night");
         } else {
-            node.classList.add("wi", "wi-owm-day-" + id);
+            node.classList.add("wi", `wi-owm-day-${id}`);
             container.classList.add("weather__container_day");
             container.classList.remove("weather__container_night");
         }

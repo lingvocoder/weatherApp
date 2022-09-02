@@ -39,7 +39,7 @@
     }
 
     &_night {
-      background: linear-gradient(45deg, rgb(107, 73, 132) 0%, rgb(72, 52, 117) 15%, rgb(43, 47, 119) 35%, rgb(20, 24, 82) 75%, rgb(7, 11, 52) 100%);
+      background: linear-gradient(45deg, rgb(107, 73, 132) 0%, rgb(72, 52, 117) 20%, rgb(43, 47, 119) 40%, rgb(20, 24, 82) 80%, rgb(7, 11, 52) 100%);
 
       & > .weather-content,
       & > .weather__header {
