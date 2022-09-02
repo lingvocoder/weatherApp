@@ -31,8 +31,8 @@ class WeatherApp {
                                         <div class="weather-content__elem">
                                             <i id="mainIcon" class="wi weather-content__icon_main"></i>
                                         </div>
-                                        <div id="description" class="weather-content__elem"></div>
                                         <div id="degree" class="weather-content__elem"></div>
+                                        <div id="description" class="weather-content__elem"></div>
                                     </div>
                                     <div class="weather-content__row">
                                         <span id="wind" class="weather-content__elem weather-content__elem_supp"></span>
@@ -490,7 +490,7 @@ class WeatherApp {
             description.innerHTML = "";
             description.appendChild(na);
         } else {
-            description.innerHTML = `Feels like ${Math.round((feels))}<span>&deg;</span>, ${des}`;
+            description.innerHTML = `<strong>${des}</strong><br><br>Feels like ${Math.round((feels))}<span>&deg;</span>`;
         }
     }
 

@@ -43,7 +43,10 @@
 
       & > .weather-content,
       & > .weather__header {
-        color: #fff;
+        color: rgb(255,255,255);
+      }
+      & .weather-content__row:nth-last-of-type(1){
+        border-color: rgb(255,255,255);
       }
     }
   }
@@ -62,7 +65,7 @@
     &__elem {
       display: inline-block;
       width: 100%;
-      padding: .5rem 1.25rem;
+      padding: .5rem 1rem;
       text-align: center;
 
       &#description,
@@ -79,8 +82,11 @@
       &_supp {
         display: flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items: flex-end;
         white-space: nowrap;
+        font: {
+          size: setFontSizeRem($rf-size,14);
+        };
       }
     }
 
@@ -98,9 +104,9 @@
       }
 
       &_supp {
-        width: 1.125rem;
+        width: 1.0625rem;
         font: {
-          size: 1.125rem;
+          size: 1.0625rem;
         };
       }
     }
@@ -121,6 +127,10 @@
 
   &__heading {
     line-height: 1.5;
+    font: {
+      size: setFontSizeRem($rf-size,14);
+      weight: 600;
+    };
   }
 
   &__header {
