@@ -498,15 +498,20 @@ class WeatherApp {
         const node = document.querySelector("#wind");
         const na = document.createElement("i");
         const windIcon = document.createElement("i");
-        windIcon.classList.add('wi', 'wi-dir', 'wi-wind', 'weather-content__icon', 'weather-content__icon_supp');
+        const strengthIcon = document.createElement("i");
+        const direction = this.defineWindDirection(degree.toFixed(0));
+        const clsArray = ['wi', 'wi-wind', 'weather-content__icon', 'weather-content__icon_supp'];
+        const {strength, scale} = this.defineWindStrength(speed.toFixed(1));
+        windIcon.classList.add(...clsArray);
+        strengthIcon.classList.add(...clsArray,`wi-wind-beaufort-${scale}`);
         na.classList.add("wi", "wi-na");
 
         if (speed === undefined) {
             node.innerHTML = "";
             node.appendChild(na);
         } else {
-            node.textContent = `${speed.toFixed(1)} m/s, ${this.defineWindDirection(degree.toFixed(0))}, (${this.defineWindStrength(speed.toFixed(1))})`;
-            node.insertAdjacentElement('afterbegin', windIcon);
+            node.innerHTML = `${windIcon.outerHTML} ${speed.toFixed(1)} m/s, ${direction},\u00A0 \u00A0 ${strengthIcon.outerHTML}${strength}`;
+            // node.insertAdjacentElement('afterbegin', windIcon);
             this.setWindDirection(windIcon, degree);
 
         }
@@ -556,38 +561,77 @@ class WeatherApp {
     defineWindStrength = (speed) => {
         switch (!isNaN(speed)) {
             case 0 <= speed && speed <= 0.2:
-                return "calm";
+                return {
+                    strength: "calm", 
+                    scale: 0
+                };
             case 0.3 <= speed && speed <= 1.5:
-                return "light air";
+                return {
+                    strength: "light air", 
+                    scale: 1
+                };
             case 1.6 <= speed && speed <= 3.3:
-                return "light breeze";
+                return {
+                    strength: "light breeze", 
+                    scale: 2
+                };
             case 3.4 <= speed && speed <= 5.4:
-                return "gentle breeze";
+                return {
+                    strength: "gentle breeze", 
+                    scale: 3
+                };
             case 5.5 <= speed && speed <= 7.9:
-                return "moderate breeze";
+                return {
+                    strength: "moderate breeze", 
+                    scale: 4
+                };
             case 8 <= speed && speed <= 10.7:
-                return "fresh breeze";
+                return {
+                    strength: "fresh breeze", 
+                    scale: 5
+                };
             case 10.8 <= speed && speed <= 13.8:
-                return "strong breeze";
+                return {
+                    strength: "strong breeze", 
+                    scale: 6
+                };
             case 13.9 <= speed && speed <= 17.1:
-                return "high wind";
+                return {
+                    strength: "high wind", 
+                    scale: 7
+                };
             case 17.2 <= speed && speed <= 20.7:
-                return "gale";
+                return {
+                    strength: "gale", 
+                    scale: 8
+                };
             case 20.8 <= speed && speed <= 24.4:
-                return "strong gale";
+                return {
+                    strength: "strong gale", 
+                    scale: 9
+                };
             case 24.5 <= speed && speed <= 28.4:
-                return "storm";
+                return {
+                    strength: "storm", 
+                    scale: 10
+                };
             case 28.5 <= speed && speed <= 32.6:
-                return "violent storm";
+                return {
+                    strength: "violent storm", 
+                    scale: 11
+                };
             case 33 < speed:
-                return "hurricane";
+                return {
+                    strength: "hurricane", 
+                    scale: 12
+                };
             default:
                 return undefined;
         }
     }
 
     setWindDirection = (icon, degree) => {
-        let node = document.querySelector(".wi-dir");
+        let node = document.querySelector(".wi-wind");
         degree = degree === 360 ? (degree + 180) - 360 : degree + 180;
 
         if (degree === undefined) {
@@ -596,7 +640,7 @@ class WeatherApp {
             node.style.transform = "none";
         } else {
             node.classList.remove("wi-na");
-            node.classList.add("wi-wind");
+            // node.classList.add(`wi-from-${direction.toLowerCase()}`);
             node.style.transform = `rotate(${degree.toFixed(0)}deg)`;
         }
     }
