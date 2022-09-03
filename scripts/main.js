@@ -331,9 +331,8 @@ class WeatherApp {
 
     handleSearchButtonClick = () => {
         const searchButton = document.querySelector('.menu-searchbar__button');
-        let that = this;
         searchButton.addEventListener('click', () => {
-            const {city, country} = that.getSearchValue();
+            const {city, country} = this.getSearchValue();
             const menu = `.menu`;
             if (!searchButton) return;
             this.createMenuItem();
@@ -451,24 +450,25 @@ class WeatherApp {
     }
 
     setTemperature = (temperature) => {
-        const node = document.querySelector("#degree");
-        let na = document.createElement("i");
-        na.classList.add("wi", "wi-na");
+        const degree = document.querySelector("#degree");
+        let naIcon = this.createElement("i");
+        const clsArray = ["wi", "wi-na"];
+        this.addClassList(naIcon, clsArray);
 
-        if (temperature === undefined) {
-            node.innerHTML = "";
-            node.appendChild(na);
+        if (!temperature) {
+            degree.innerHTML = "";
+            degree.appendChild(naIcon);
         } else {
-            node.innerHTML = `${Math.round((temperature))}<span>&deg;</span>`;
+            degree.innerHTML = `${Math.round((temperature))}\u00B0`;
         }
     }
 
     setIconCode = (icon, id) => {
         const node = document.querySelector("#mainIcon");
         const container = document.querySelector(".weather__container");
-     
+
         node.className = 'weather-content__icon_main';
-        if (icon === undefined) {
+        if (!icon) {
             node.classList.add("wi-na");
         } else if (icon.indexOf("n") !== -1) {
             node.classList.add("wi", `wi-owm-night-${id}`);
@@ -481,37 +481,45 @@ class WeatherApp {
         }
     }
 
+    createElement = (tag = '') => {
+        return document.createElement(`${tag}`);
+    }
+
+    addClassList = (elem, cls = []) => {
+        elem.classList.add(...cls);
+    }
+
     setDescription = (des, feels) => {
         let description = document.querySelector("#description");
-        let na = document.createElement("i");
-        na.classList.add("wi", "wi-na");
+        let naIcon = this.createElement("i");
+        const clsArray = ["wi", "wi-na"];
+        this.addClassList(naIcon, clsArray);
 
-        if (des === undefined) {
+        if (!des) {
             description.innerHTML = "";
-            description.appendChild(na);
+            description.appendChild(naIcon);
         } else {
-            description.innerHTML = `<strong>${des}</strong><br><br>Feels like ${Math.round((feels))}<span>&deg;</span>`;
+            description.innerHTML = `<strong>${des}</strong><br><br>Feels like ${Math.round((feels))}\u00B0`;
         }
     }
 
     setWindSpeedStrength = (speed, degree) => {
         const node = document.querySelector("#wind");
-        const na = document.createElement("i");
-        const windIcon = document.createElement("i");
-        const strengthIcon = document.createElement("i");
+        const naIcon = this.createElement("i");
+        const windIcon = this.createElement("i");
+        const strengthIcon = this.createElement("i");
         const direction = this.defineWindDirection(degree.toFixed(0));
         const clsArray = ['wi', 'wi-wind', 'weather-content__icon', 'weather-content__icon_supp'];
         const {strength, scale} = this.defineWindStrength(speed.toFixed(1));
-        windIcon.classList.add(...clsArray);
-        strengthIcon.classList.add(...clsArray,`wi-wind-beaufort-${scale}`);
-        na.classList.add("wi", "wi-na");
+        this.addClassList(windIcon, clsArray);
+        this.addClassList(strengthIcon, clsArray.concat(`wi-wind-beaufort-${scale}`));
+        this.addClassList(naIcon, ["wi", "wi-na"]);
 
-        if (speed === undefined) {
+        if (!speed) {
             node.innerHTML = "";
-            node.appendChild(na);
+            node.appendChild(naIcon);
         } else {
-            node.innerHTML = `${windIcon.outerHTML} ${speed.toFixed(1)} m/s, ${direction},\u00A0 \u00A0 ${strengthIcon.outerHTML}${strength}`;
-            // node.insertAdjacentElement('afterbegin', windIcon);
+            node.innerHTML = `${windIcon.outerHTML} ${speed.toFixed(1)} m/s, ${direction},\u00A0\u00A0${strengthIcon.outerHTML}${strength}`;
             this.setWindDirection(windIcon, degree);
 
         }
@@ -562,67 +570,67 @@ class WeatherApp {
         switch (!isNaN(speed)) {
             case 0 <= speed && speed <= 0.2:
                 return {
-                    strength: "calm", 
+                    strength: "calm",
                     scale: 0
                 };
             case 0.3 <= speed && speed <= 1.5:
                 return {
-                    strength: "light air", 
+                    strength: "light air",
                     scale: 1
                 };
             case 1.6 <= speed && speed <= 3.3:
                 return {
-                    strength: "light breeze", 
+                    strength: "light breeze",
                     scale: 2
                 };
             case 3.4 <= speed && speed <= 5.4:
                 return {
-                    strength: "gentle breeze", 
+                    strength: "gentle breeze",
                     scale: 3
                 };
             case 5.5 <= speed && speed <= 7.9:
                 return {
-                    strength: "moderate breeze", 
+                    strength: "moderate breeze",
                     scale: 4
                 };
             case 8 <= speed && speed <= 10.7:
                 return {
-                    strength: "fresh breeze", 
+                    strength: "fresh breeze",
                     scale: 5
                 };
             case 10.8 <= speed && speed <= 13.8:
                 return {
-                    strength: "strong breeze", 
+                    strength: "strong breeze",
                     scale: 6
                 };
             case 13.9 <= speed && speed <= 17.1:
                 return {
-                    strength: "high wind", 
+                    strength: "high wind",
                     scale: 7
                 };
             case 17.2 <= speed && speed <= 20.7:
                 return {
-                    strength: "gale", 
+                    strength: "gale",
                     scale: 8
                 };
             case 20.8 <= speed && speed <= 24.4:
                 return {
-                    strength: "strong gale", 
+                    strength: "strong gale",
                     scale: 9
                 };
             case 24.5 <= speed && speed <= 28.4:
                 return {
-                    strength: "storm", 
+                    strength: "storm",
                     scale: 10
                 };
             case 28.5 <= speed && speed <= 32.6:
                 return {
-                    strength: "violent storm", 
+                    strength: "violent storm",
                     scale: 11
                 };
             case 33 < speed:
                 return {
-                    strength: "hurricane", 
+                    strength: "hurricane",
                     scale: 12
                 };
             default:
@@ -634,7 +642,7 @@ class WeatherApp {
         let node = document.querySelector(".wi-wind");
         degree = degree === 360 ? (degree + 180) - 360 : degree + 180;
 
-        if (degree === undefined) {
+        if (!degree) {
             node.classList.remove("wi-wind");
             node.classList.add("wi-na");
             node.style.transform = "none";
@@ -647,59 +655,60 @@ class WeatherApp {
 
     setHumidity = (humidity) => {
         let node = document.querySelector("#humidity");
-        let na = document.createElement("i");
-        const humidityIcon = document.createElement("i");
-        humidityIcon.classList.add('wi', 'wi-humidity', 'weather-content__icon', 'weather-content__icon_supp');
-        na.classList.add("wi", "wi-na");
+        let naNode = this.createElement("i");
+        const humidityIcon = this.createElement("i");
+        const clsArray = ['wi', 'wi-humidity', 'weather-content__icon', 'weather-content__icon_supp'];
+        this.addClassList(humidityIcon, clsArray);
+        this.addClassList(naNode, ["wi", "wi-na"]);
 
-        if (humidity === undefined) {
+        if (!humidity) {
             node.innerHTML = "";
-            node.appendChild(na);
+            node.appendChild(naNode);
         } else {
-            node.innerHTML = `Humidity:&nbsp;${humidity}<span>&percnt;</span>`;
-            node.insertAdjacentElement('afterbegin', humidityIcon);
+            node.innerHTML = `${humidityIcon.outerHTML}Humidity:\u00A0${humidity}\u0025`;
         }
     }
 
     setPressure = (pressure) => {
         let node = document.querySelector("#pressure");
-        let na = document.createElement("i");
-        const pressureIcon = document.createElement("i");
-        pressureIcon.classList.add('wi', 'wi-barometer', 'weather-content__icon', 'weather-content__icon_supp')
-        na.classList.add("wi", "wi-na");
+        let naIcon = this.createElement("i");
+        const pressureIcon = this.createElement("i");
+        const clsArray = ['wi', 'wi-barometer', 'weather-content__icon', 'weather-content__icon_supp'];
+        this.addClassList(pressureIcon, clsArray);
+        this.addClassList(naIcon, ["wi", "wi-na"]);
 
-        if (pressure === undefined) {
+        if (!pressure) {
             node.innerHTML = "";
-            node.appendChild(na);
+            node.appendChild(naIcon);
         } else {
-            node.textContent = `Pressure: ${pressure.toFixed(0)} hPa`;
-            node.insertAdjacentElement('afterbegin', pressureIcon);
+            node.innerHTML = `${pressureIcon.outerHTML}Pressure:\u00A0${pressure.toFixed(0)}\u00A0hPa`;
         }
     }
 
     setVisibility = (visibility) => {
         let node = document.querySelector("#visibility");
-        let na = document.createElement("i");
-        const visibilityIcon = document.createElement("i");
-        visibilityIcon.classList.add('wi', 'wi-train', 'weather-content__icon', 'weather-content__icon_supp');
-        na.classList.add("wi", "wi-na");
+        let naIcon = this.createElement("i");
+        const visibilityIcon = this.createElement("i");
+        const clsArray = ['wi', 'wi-train', 'weather-content__icon', 'weather-content__icon_supp'];
+        this.addClassList(visibilityIcon, clsArray);
+        this.addClassList(naIcon, ["wi", "wi-na"]);
 
-        if (visibility === undefined) {
+        if (!visibility) {
             node.innerHTML = "";
-            node.appendChild(na);
+            node.appendChild(naIcon);
         } else {
-            node.textContent = `Visibility: ${(visibility / 1000).toFixed(1)} km`;
-            node.insertAdjacentElement('afterbegin', visibilityIcon);
+            node.innerHTML = `${visibilityIcon.outerHTML}Visibility: ${(visibility / 1000).toFixed(1)}\u00A0km`;
         }
     }
 
     setDewPoint = (temp, humidity) => {
 
         const node = document.querySelector("#dew");
-        let na = document.createElement("i");
-        const dewPointIcon = document.createElement("i");
-        dewPointIcon.classList.add('wi', 'wi-raindrop', 'weather-content__icon', 'weather-content__icon_supp');
-        na.classList.add("wi", "wi-na");
+        let naIcon = this.createElement("i");
+        const dewPointIcon = this.createElement("i");
+        const clasArray = ['wi', 'wi-raindrop', 'weather-content__icon', 'weather-content__icon_supp'];
+        this.addClassList(dewPointIcon, clasArray);
+        this.addClassList(naIcon,["wi", "wi-na"]);
 
         const a = 17.625;
         const b = 243.04;
@@ -708,12 +717,11 @@ class WeatherApp {
         const dewPoint = (b * f) / (a - f);
 
 
-        if (temp === undefined || humidity === undefined) {
+        if (!temp || !humidity ) {
             node.innerHTML = "";
-            node.appendChild(na);
+            node.appendChild(naIcon);
         } else {
-            node.innerHTML = `Dew point: ${Math.round(dewPoint)}<span>&deg;</span>`;
-            node.insertAdjacentElement('afterbegin', dewPointIcon);
+            node.innerHTML = `${dewPointIcon.outerHTML}Dew point:\u00A0${Math.round(dewPoint)}\u00B0`;
         }
     }
 
