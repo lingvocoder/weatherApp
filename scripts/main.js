@@ -452,8 +452,8 @@ class WeatherApp {
     setTemperature = (temperature) => {
         const degree = document.querySelector("#degree");
         let naIcon = this.createElement("i");
-        const clsArray = ["wi", "wi-na"];
-        this.addClassList(naIcon, clsArray);
+        const naIconClsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
+        this.addClassList(naIcon, naIconClsArray);
 
         if (!temperature) {
             degree.innerHTML = "";
