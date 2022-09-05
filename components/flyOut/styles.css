@@ -60,7 +60,7 @@
   .menu-searchbar {
     position: relative;
     display: flex;
-    padding: 0 0.5rem;
+    padding: 0 0.75rem 0.5rem 0.5rem;
     flex-flow: row nowrap; }
     .menu-searchbar__button {
       position: relative;

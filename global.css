@@ -65,7 +65,7 @@ h4 {
       background: linear-gradient(45deg, #6b4984 0%, #483475 20%, #2b2f77 40%, #141852 80%, #070b34 100%); }
       .weather__container_night > .weather-content, .weather__container_night > .weather__header {
         color: white; }
-      .weather__container_night .weather-content__row:nth-last-of-type(1) {
+      .weather__container_night .weather-content__row:nth-last-of-type(1), .weather__container_night .weather-toggle__btn {
         border-color: white; }
   .weather-content {
     position: relative;
@@ -108,8 +108,10 @@ h4 {
       justify-content: center;
       margin-bottom: 1rem;
       padding-top: 1rem; }
-      .weather-content__row:nth-last-of-type(1) {
+      .weather-content__row:nth-last-of-type(2) {
         border-top: 1px solid rgba(75, 85, 99, 0.3); }
+      .weather-content__row:nth-last-of-type(1) {
+        margin-top: 2rem; }
   .weather__heading {
     line-height: 1.5;
     font-size: 0.875rem;
@@ -121,6 +123,30 @@ h4 {
     justify-content: space-between;
     padding: 0.5rem;
     margin-bottom: 1rem; }
+  .weather-toggle {
+    display: flex;
+    margin-bottom: 1rem; }
+    .weather-toggle__text {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      margin-right: auto; }
+    .weather-toggle__btn {
+      width: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid rgba(70, 80, 93, 0.3);
+      font-size: 0.8125rem;
+      cursor: pointer; }
+      .weather-toggle__btn_active {
+        background: linear-gradient(135deg, #fa9d7c 0%, #ef7aa5 100%); }
+      .weather-toggle__btn_left {
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px; }
+      .weather-toggle__btn_right {
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px; }
 
 .menu {
   position: absolute;
@@ -184,7 +210,7 @@ h4 {
   .menu-searchbar {
     position: relative;
     display: flex;
-    padding: 0 0.5rem;
+    padding: 0 0.75rem 0.5rem 0.5rem;
     flex-flow: row nowrap; }
     .menu-searchbar__button {
       position: relative;

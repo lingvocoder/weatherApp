@@ -41,6 +41,18 @@ class WeatherApp {
                                         <span id="visibility" class="weather-content__elem weather-content__elem_supp"></span>
                                         <span id="dew" class="weather-content__elem weather-content__elem_supp"></span>
                                     </div>  
+                                    <div class="weather-content__row">
+                                        <div id="toggleDegree" class="weather-toggle">
+                                            <span class="weather-toggle__text">Temperature</span>
+                                            <span id="celsius" class="weather-toggle__btn weather-toggle__btn_active weather-toggle__btn_left">C&deg;</span>
+                                            <span id="fahrenheit" class="weather-toggle__btn weather-toggle__btn_right">F&deg;</span>
+                                        </div>
+                                        <div id="togglePressure" class="weather-toggle">
+                                            <span class="weather-toggle__text">Pressure</span>
+                                            <span id="hpa" class="weather-toggle__btn weather-toggle__btn_active weather-toggle__btn_left">hPa</span>
+                                            <span id="mhg" class="weather-toggle__btn weather-toggle__btn_right">mm Hg</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </main>
                             <div class="menu">
@@ -87,6 +99,8 @@ class WeatherApp {
         document.addEventListener("click", this.onHandleDragEvent);
         document.addEventListener("DOMContentLoaded", this.getNavigationData);
         document.addEventListener("DOMContentLoaded", this.handleMenuItemClick);
+        document.addEventListener("DOMContentLoaded", this.convertDegrees);
+        document.addEventListener("DOMContentLoaded", this.convertPressure);
     }
 
     handleDragStart = (ev) => {
@@ -499,7 +513,7 @@ class WeatherApp {
             description.innerHTML = "";
             description.appendChild(naIcon);
         } else {
-            description.innerHTML = `<strong>${des}</strong><br><br>Feels like ${Math.round((feels))}\u00B0`;
+            description.innerHTML = `<strong>${des}</strong><br><br>Feels like <span id="feelsLike">${Math.round((feels))}\u00B0</span>`;
         }
     }
 
@@ -524,6 +538,92 @@ class WeatherApp {
             this.setWindDirection(windIcon, degree);
 
         }
+    }
+    
+    convertDegrees = () => {
+        const toggle = document.querySelector('#toggleDegree');
+        const degree = document.querySelector('#degree');
+        let selectedButton;
+        
+        toggle.addEventListener('click', (ev) => {
+            const {target} = ev;
+            const btn = target.closest('.weather-toggle__btn');
+            let feelsLike = document.querySelector("#feelsLike");
+            const btnID = btn.getAttribute('id');
+            const degReadings = parseFloat(degree.textContent);
+            const feelsLikeReadings = parseFloat(feelsLike.textContent);
+            if (btn.classList.contains('weather-toggle__btn_active')) return false;
+            if (!btn) return;
+            
+            highlightButton(btn);
+            if (btnID === 'celsius') {
+                degree.innerHTML = `${this.convertToCelsius(degReadings)}\u00B0`;
+                feelsLike.innerHTML = `${this.convertToCelsius(feelsLikeReadings)}\u00B0`;
+            }
+            if (btnID === 'fahrenheit') {
+                degree.innerHTML = `${this.convertToFahrenheit(degReadings)}\u00B0`;
+                feelsLike.innerHTML = `${this.convertToFahrenheit(feelsLikeReadings)}\u00B0`;
+            }
+
+            function highlightButton(currButton) {
+                const activeButton = toggle.querySelector('.weather-toggle__btn_active');
+                activeButton.classList.remove('weather-toggle__btn_active');
+                if (selectedButton) {
+                    selectedButton.classList.remove('weather-toggle__btn_active');
+                }
+                selectedButton = currButton;
+                selectedButton.classList.add('weather-toggle__btn_active');
+            }
+        })
+    }
+    
+    convertPressure = () => {
+        const toggle = document.querySelector('#togglePressure');
+        const pressure = document.querySelector('#pressure');
+        let selectedButton;
+
+        toggle.addEventListener('click', (ev) => {
+            const {target} = ev;
+            const btn = target.closest('.weather-toggle__btn');
+            const btnID = btn.getAttribute('id');
+            const pressureReadings = parseFloat(pressure.textContent.replace(/^\D+/g, ''));
+            const pressureIcon = this.createElement("i");
+            const pressureClsArray = ['wi', 'wi-barometer', 'weather-content__icon', 'weather-content__icon_supp'];
+            this.addClassList(pressureIcon, pressureClsArray);
+            if (btn.classList.contains('weather-toggle__btn_active')) return false;
+            if (!btn) return;
+            
+            highlightButton(btn);
+            if (btnID === 'hpa') {
+                pressure.innerHTML = `${pressureIcon.outerHTML}Pressure:\u00A0${this.convertToHpa(pressureReadings)}\u00A0hPa`;
+            }
+            if (btnID === 'mhg') {
+                pressure.innerHTML = `${pressureIcon.outerHTML}Pressure:\u00A0${this.convertToMhg(pressureReadings)}\u00A0mm Hg`;
+            }
+
+            function highlightButton(currButton) {
+                const activeButton = toggle.querySelector('.weather-toggle__btn_active');
+                activeButton.classList.remove('weather-toggle__btn_active');
+                if (selectedButton) {
+                    selectedButton.classList.remove('weather-toggle__btn_active');
+                }
+                selectedButton = currButton;
+                selectedButton.classList.add('weather-toggle__btn_active');
+            }
+        })
+    }
+
+    convertToCelsius = (deg) => {
+        return (((deg - 32) * 5) / 9).toFixed(0);
+    }
+    convertToFahrenheit = (deg) => {
+        return ((deg * 9) / 5 + 32).toFixed(0);
+    }
+    convertToMhg = (pressure) => {
+        return Math.round(pressure / 1.33322);
+    }
+    convertToHpa = (pressure) => {
+        return Math.round(pressure * 1.33322);
     }
 
     defineWindDirection = (deg) => {
