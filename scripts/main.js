@@ -616,12 +616,15 @@ class WeatherApp {
     convertToCelsius = (deg) => {
         return (((deg - 32) * 5) / 9).toFixed(0);
     }
+    
     convertToFahrenheit = (deg) => {
         return ((deg * 9) / 5 + 32).toFixed(0);
     }
+    
     convertToMhg = (pressure) => {
         return Math.round(pressure / 1.33322);
     }
+    
     convertToHpa = (pressure) => {
         return Math.round(pressure * 1.33322);
     }
