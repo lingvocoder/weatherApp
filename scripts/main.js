@@ -1,3 +1,13 @@
+import {
+    convertToFahrenheit, 
+    convertToCelsius,
+    convertToHpa,
+    convertToMhg,
+    defineWindDirection,
+    defineWindStrength,
+} from "./helpers/main.js";
+
+
 class WeatherApp {
 
     static dragged = null;
@@ -522,10 +532,10 @@ class WeatherApp {
         const naIcon = this.createElement("i");
         const windIcon = this.createElement("i");
         const strengthIcon = this.createElement("i");
-        const direction = this.defineWindDirection(degree.toFixed(0));
+        const direction = defineWindDirection(degree.toFixed(0));
         const clsArray = ['wi', 'wi-wind', 'weather-content__icon', 'weather-content__icon_supp'];
         const naIconClsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
-        const {strength, scale} = this.defineWindStrength(speed.toFixed(1));
+        const {strength, scale} = defineWindStrength(speed.toFixed(1));
         this.addClassList(windIcon, clsArray);
         this.addClassList(strengthIcon, clsArray.concat(`wi-wind-beaufort-${scale}`));
         this.addClassList(naIcon, naIconClsArray);
@@ -539,12 +549,12 @@ class WeatherApp {
 
         }
     }
-    
+
     convertDegrees = () => {
         const toggle = document.querySelector('#toggleDegree');
         const degree = document.querySelector('#degree');
         let selectedButton;
-        
+
         toggle.addEventListener('click', (ev) => {
             const {target} = ev;
             const btn = target.closest('.weather-toggle__btn');
@@ -554,15 +564,15 @@ class WeatherApp {
             const feelsLikeReadings = parseFloat(feelsLike.textContent);
             if (btn.classList.contains('weather-toggle__btn_active')) return false;
             if (!btn) return;
-            
+
             highlightButton(btn);
             if (btnID === 'celsius') {
-                degree.innerHTML = `${this.convertToCelsius(degReadings)}\u00B0`;
-                feelsLike.innerHTML = `${this.convertToCelsius(feelsLikeReadings)}\u00B0`;
+                degree.innerHTML = `${convertToCelsius(degReadings)}\u00B0`;
+                feelsLike.innerHTML = `${convertToCelsius(feelsLikeReadings)}\u00B0`;
             }
             if (btnID === 'fahrenheit') {
-                degree.innerHTML = `${this.convertToFahrenheit(degReadings)}\u00B0`;
-                feelsLike.innerHTML = `${this.convertToFahrenheit(feelsLikeReadings)}\u00B0`;
+                degree.innerHTML = `${convertToFahrenheit(degReadings)}\u00B0`;
+                feelsLike.innerHTML = `${convertToFahrenheit(feelsLikeReadings)}\u00B0`;
             }
 
             function highlightButton(currButton) {
@@ -576,7 +586,7 @@ class WeatherApp {
             }
         })
     }
-    
+
     convertPressure = () => {
         const toggle = document.querySelector('#togglePressure');
         const pressure = document.querySelector('#pressure');
@@ -592,13 +602,13 @@ class WeatherApp {
             this.addClassList(pressureIcon, pressureClsArray);
             if (btn.classList.contains('weather-toggle__btn_active')) return false;
             if (!btn) return;
-            
+
             highlightButton(btn);
             if (btnID === 'hpa') {
-                pressure.innerHTML = `${pressureIcon.outerHTML}Pressure:\u00A0${this.convertToHpa(pressureReadings)}\u00A0hPa`;
+                pressure.innerHTML = `${pressureIcon.outerHTML}Pressure:\u00A0${convertToHpa(pressureReadings)}\u00A0hPa`;
             }
             if (btnID === 'mhg') {
-                pressure.innerHTML = `${pressureIcon.outerHTML}Pressure:\u00A0${this.convertToMhg(pressureReadings)}\u00A0mm Hg`;
+                pressure.innerHTML = `${pressureIcon.outerHTML}Pressure:\u00A0${convertToMhg(pressureReadings)}\u00A0mm Hg`;
             }
 
             function highlightButton(currButton) {
@@ -613,134 +623,8 @@ class WeatherApp {
         })
     }
 
-    convertToCelsius = (deg) => {
-        return (((deg - 32) * 5) / 9).toFixed(0);
-    }
-    
-    convertToFahrenheit = (deg) => {
-        return ((deg * 9) / 5 + 32).toFixed(0);
-    }
-    
-    convertToMhg = (pressure) => {
-        return Math.round(pressure / 1.33322);
-    }
-    
-    convertToHpa = (pressure) => {
-        return Math.round(pressure * 1.33322);
-    }
 
-    defineWindDirection = (deg) => {
-        switch (!isNaN(deg)) {
-            case 0 <= deg && deg <= 11:
-                return "N";
-            case 12 <= deg && deg <= 33:
-                return "NNE";
-            case 34 <= deg && deg <= 56:
-                return "NE";
-            case 57 <= deg && deg <= 78:
-                return "ENE";
-            case 79 <= deg && deg <= 101:
-                return "E";
-            case 102 <= deg && deg <= 123:
-                return "ESE";
-            case 124 <= deg && deg <= 146:
-                return "SE";
-            case 147 <= deg && deg <= 168:
-                return "SSE";
-            case 169 <= deg && deg <= 191:
-                return "S";
-            case 192 <= deg && deg <= 213:
-                return "SSW";
-            case 214 <= deg && deg <= 236:
-                return "SW";
-            case 237 <= deg && deg <= 258:
-                return "WSW";
-            case 259 <= deg && deg <= 281:
-                return "W";
-            case 282 <= deg && deg <= 303:
-                return "WNW";
-            case 304 <= deg && deg <= 326:
-                return "NW";
-            case 327 <= deg && deg <= 348:
-                return "NNW";
-            case 349 <= deg && deg <= 360:
-                return "N";
-            default:
-                return undefined;
-        }
-    }
 
-    defineWindStrength = (speed) => {
-        switch (!isNaN(speed)) {
-            case 0 <= speed && speed <= 0.2:
-                return {
-                    strength: "calm",
-                    scale: 0
-                };
-            case 0.3 <= speed && speed <= 1.5:
-                return {
-                    strength: "light air",
-                    scale: 1
-                };
-            case 1.6 <= speed && speed <= 3.3:
-                return {
-                    strength: "light breeze",
-                    scale: 2
-                };
-            case 3.4 <= speed && speed <= 5.4:
-                return {
-                    strength: "gentle breeze",
-                    scale: 3
-                };
-            case 5.5 <= speed && speed <= 7.9:
-                return {
-                    strength: "moderate breeze",
-                    scale: 4
-                };
-            case 8 <= speed && speed <= 10.7:
-                return {
-                    strength: "fresh breeze",
-                    scale: 5
-                };
-            case 10.8 <= speed && speed <= 13.8:
-                return {
-                    strength: "strong breeze",
-                    scale: 6
-                };
-            case 13.9 <= speed && speed <= 17.1:
-                return {
-                    strength: "high wind",
-                    scale: 7
-                };
-            case 17.2 <= speed && speed <= 20.7:
-                return {
-                    strength: "gale",
-                    scale: 8
-                };
-            case 20.8 <= speed && speed <= 24.4:
-                return {
-                    strength: "strong gale",
-                    scale: 9
-                };
-            case 24.5 <= speed && speed <= 28.4:
-                return {
-                    strength: "storm",
-                    scale: 10
-                };
-            case 28.5 <= speed && speed <= 32.6:
-                return {
-                    strength: "violent storm",
-                    scale: 11
-                };
-            case 33 < speed:
-                return {
-                    strength: "hurricane",
-                    scale: 12
-                };
-            default:
-                return undefined;
-        }
-    }
 
     setWindDirection = (icon, degree) => {
         let node = document.querySelector(".wi-wind");
