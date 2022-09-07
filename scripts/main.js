@@ -5,6 +5,8 @@ import {
     convertToMhg,
     defineWindDirection,
     defineWindStrength,
+    createElement,
+    addClassList
 } from "./helpers/main.js";
 
 
@@ -475,9 +477,9 @@ class WeatherApp {
 
     setTemperature = (temperature) => {
         const degree = document.querySelector("#degree");
-        let naIcon = this.createElement("i");
+        let naIcon = createElement("i");
         const naIconClsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
-        this.addClassList(naIcon, naIconClsArray);
+        addClassList(naIcon, naIconClsArray);
 
         if (!temperature) {
             degree.innerHTML = "";
@@ -505,19 +507,12 @@ class WeatherApp {
         }
     }
 
-    createElement = (tag = '') => {
-        return document.createElement(`${tag}`);
-    }
-
-    addClassList = (elem, cls = []) => {
-        elem.classList.add(...cls);
-    }
 
     setDescription = (des, feels) => {
         let description = document.querySelector("#description");
-        let naIcon = this.createElement("i");
+        let naIcon = createElement("i");
         const clsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
-        this.addClassList(naIcon, clsArray);
+        addClassList(naIcon, clsArray);
 
         if (!des) {
             description.innerHTML = "";
@@ -529,16 +524,16 @@ class WeatherApp {
 
     setWindSpeedStrength = (speed, degree) => {
         const node = document.querySelector("#wind");
-        const naIcon = this.createElement("i");
-        const windIcon = this.createElement("i");
-        const strengthIcon = this.createElement("i");
+        const naIcon = createElement("i");
+        const windIcon = createElement("i");
+        const strengthIcon = createElement("i");
         const direction = defineWindDirection(degree.toFixed(0));
         const clsArray = ['wi', 'wi-wind', 'weather-content__icon', 'weather-content__icon_supp'];
         const naIconClsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
         const {strength, scale} = defineWindStrength(speed.toFixed(1));
-        this.addClassList(windIcon, clsArray);
-        this.addClassList(strengthIcon, clsArray.concat(`wi-wind-beaufort-${scale}`));
-        this.addClassList(naIcon, naIconClsArray);
+        addClassList(windIcon, clsArray);
+        addClassList(strengthIcon, clsArray.concat(`wi-wind-beaufort-${scale}`));
+        addClassList(naIcon, naIconClsArray);
 
         if (!speed || !degree) {
             node.innerHTML = "";
@@ -597,9 +592,9 @@ class WeatherApp {
             const btn = target.closest('.weather-toggle__btn');
             const btnID = btn.getAttribute('id');
             const pressureReadings = parseFloat(pressure.textContent.replace(/^\D+/g, ''));
-            const pressureIcon = this.createElement("i");
+            const pressureIcon = createElement("i");
             const pressureClsArray = ['wi', 'wi-barometer', 'weather-content__icon', 'weather-content__icon_supp'];
-            this.addClassList(pressureIcon, pressureClsArray);
+            addClassList(pressureIcon, pressureClsArray);
             if (btn.classList.contains('weather-toggle__btn_active')) return false;
             if (!btn) return;
 
@@ -637,12 +632,12 @@ class WeatherApp {
 
     setHumidity = (humidity) => {
         const node = document.querySelector("#humidity");
-        const naIcon = this.createElement("i");
-        const humidityIcon = this.createElement("i");
+        const naIcon = createElement("i");
+        const humidityIcon = createElement("i");
         const humidityClsArray = ['wi', 'wi-humidity', 'weather-content__icon', 'weather-content__icon_supp'];
         const naIconClsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
-        this.addClassList(humidityIcon, humidityClsArray);
-        this.addClassList(naIcon, naIconClsArray);
+        addClassList(humidityIcon, humidityClsArray);
+        addClassList(naIcon, naIconClsArray);
 
         if (!humidity) {
             node.innerHTML = "";
@@ -654,12 +649,12 @@ class WeatherApp {
 
     setPressure = (pressure) => {
         let node = document.querySelector("#pressure");
-        let naIcon = this.createElement("i");
-        const pressureIcon = this.createElement("i");
+        let naIcon = createElement("i");
+        const pressureIcon = createElement("i");
         const pressureClsArray = ['wi', 'wi-barometer', 'weather-content__icon', 'weather-content__icon_supp'];
         const naIconClsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
-        this.addClassList(pressureIcon, pressureClsArray);
-        this.addClassList(naIcon, naIconClsArray);
+        addClassList(pressureIcon, pressureClsArray);
+        addClassList(naIcon, naIconClsArray);
 
         if (!pressure) {
             node.innerHTML = "";
@@ -671,12 +666,12 @@ class WeatherApp {
 
     setVisibility = (visibility) => {
         let node = document.querySelector("#visibility");
-        let naIcon = this.createElement("i");
-        const visibilityIcon = this.createElement("i");
+        let naIcon = createElement("i");
+        const visibilityIcon = createElement("i");
         const visibilityClsArray = ['wi', 'wi-train', 'weather-content__icon', 'weather-content__icon_supp'];
         const naIconClsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
-        this.addClassList(visibilityIcon, visibilityClsArray);
-        this.addClassList(naIcon, naIconClsArray);
+        addClassList(visibilityIcon, visibilityClsArray);
+        addClassList(naIcon, naIconClsArray);
 
         if (!visibility) {
             node.innerHTML = "";
@@ -689,12 +684,12 @@ class WeatherApp {
     setDewPoint = (temp, humidity) => {
 
         const node = document.querySelector("#dew");
-        let naIcon = this.createElement("i");
-        const dewPointIcon = this.createElement("i");
+        let naIcon = createElement("i");
+        const dewPointIcon = createElement("i");
         const dewPointClsArray = ['wi', 'wi-raindrop', 'weather-content__icon', 'weather-content__icon_supp'];
         const naIconClsArray = ["wi", "wi-na", 'weather-content__icon', 'weather-content__icon_supp'];
-        this.addClassList(dewPointIcon, dewPointClsArray);
-        this.addClassList(naIcon, naIconClsArray);
+        addClassList(dewPointIcon, dewPointClsArray);
+        addClassList(naIcon, naIconClsArray);
 
         const a = 17.625;
         const b = 243.04;

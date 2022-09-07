@@ -154,6 +154,25 @@ export const defineWindDirection = (deg) => {
 
 /**
  *
+ * @param tag{string} Tag name
+ * @return {HTMLElement} Element to be returned
+ */
+export const createElement = (tag = '') => {
+    return document.createElement(`${tag}`);
+}
+
+/**
+ *
+ * @param elem{HTMLElement} Element whose classList id modified
+ * @param cls{Array} Array of classes which is added to the above element
+ */
+export const addClassList = (elem, cls = []) => {
+    elem.classList.add(...cls);
+}
+
+
+/**
+ *
  * @returns {*[]}Array of HTML nodeElements of the target element
  * @param selector{string}Selector to be used
  */
