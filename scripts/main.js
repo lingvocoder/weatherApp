@@ -340,7 +340,7 @@ class WeatherApp {
                     sys: "sys",
                 }
 
-                fetch(url,{credentials: 'include'})
+                fetch(url,{credentials: 'include', method:"GET",mode:"cors"})
                     .then(response => response.json())
                     .then((data) => {
                         this.displayData(data, params);
@@ -381,7 +381,7 @@ class WeatherApp {
                     sys: "sys",
                 }
 
-                fetch(url,{credentials: 'include'})
+                fetch(url,{credentials: 'include', method:"GET",mode:"cors"})
                     .then(response => response.json())
                     .then((data) => {
                         this.displayData(data, params);
@@ -458,7 +458,7 @@ class WeatherApp {
                 sys: "sys",
             }
 
-            await fetch(url,{credentials: 'include'})
+            await fetch(url,{credentials: 'include', method:"GET",mode:"cors"})
                 .then(response => response.json())
                 .then((data) => {
                     this.displayData(data, params);
