@@ -16,7 +16,7 @@ class WeatherApp {
 
     constructor() {
         this.APPID = "1be4f38ab943b366bfbf42919abf5ba5";
-        this.URL = "http://api.openweathermap.org/data/2.5/weather?";
+        this.URL = "https://api.openweathermap.org/data/2.5/weather?";
         this.initEventListeners();
     }
 
