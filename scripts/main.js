@@ -340,7 +340,7 @@ class WeatherApp {
                     sys: "sys",
                 }
 
-                fetch(url,{credentials: 'same-origin'})
+                fetch(url,{credentials: 'include'})
                     .then(response => response.json())
                     .then((data) => {
                         this.displayData(data, params);
@@ -381,7 +381,7 @@ class WeatherApp {
                     sys: "sys",
                 }
 
-                fetch(url,{credentials: 'same-origin'})
+                fetch(url,{credentials: 'include'})
                     .then(response => response.json())
                     .then((data) => {
                         this.displayData(data, params);
@@ -458,7 +458,7 @@ class WeatherApp {
                 sys: "sys",
             }
 
-            await fetch(url,{credentials: 'same-origin'})
+            await fetch(url,{credentials: 'include'})
                 .then(response => response.json())
                 .then((data) => {
                     this.displayData(data, params);
